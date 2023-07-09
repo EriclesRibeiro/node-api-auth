@@ -7,11 +7,6 @@ interface ICreateUserParams {
     password: string;
 }
 
-interface ICreateUserRepository {
-    create(): Promise<User>
-}
-
 export {
-    ICreateUserRepository,
     ICreateUserParams
 }
