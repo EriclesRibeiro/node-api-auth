@@ -6,7 +6,6 @@ import UserRoutes from "./routes/user-routes"
 class Server {
     private app: Application
     private port: number
-    private router: Router = Router()
 
     constructor(port: number) {
         this.app = express()
@@ -18,7 +17,6 @@ class Server {
     }
 
     private initializeMiddleware() {
-        this.app.use(this.router)
         this.app.use(express.json())
         this.app.use(express.urlencoded({ extended: true }))
     }
@@ -26,7 +24,7 @@ class Server {
     private initializeRouters() {
         const userRoutes = new UserRoutes()
 
-        this.router.post("/api/register", userRoutes.createUser)
+        this.app.use("/api/register", userRoutes.createUser)
     }
 
     private initializeServer() {
