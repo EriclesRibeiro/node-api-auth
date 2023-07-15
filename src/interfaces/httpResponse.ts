@@ -1,7 +1,7 @@
 interface HttpResponse<T> {
     status: number;
     body?: T;
-    error?: string;
+    error?: T;
 }
 
 export default HttpResponse

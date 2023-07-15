@@ -15,7 +15,7 @@ class bcrypt {
     }
 
     async decode() {
-        const response = await compare(this.plainText, this.comparePlainText)
+        const response = await compare(this.comparePlainText, this.plainText)
 
         return response
     }

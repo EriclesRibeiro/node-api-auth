@@ -1,9 +1,10 @@
 import { ICreateUserParams } from "../../controllers/create-user/create-user.interfaces";
 import prisma from "../../lib/prisma";
 import User from "../../models/user.model";
-import { ICreateUserRepository } from "./create-user.interface";
+import bcrypt from "../../utils/bcrypt";
+import { ICreateUserRepositorie } from "./create-user.interface";
 
-class CreateUserRepository implements ICreateUserRepository {
+class CreateUserRepository implements ICreateUserRepositorie {
     async create(params: ICreateUserParams): Promise<User> {
         const emailExists = await prisma.user.findUnique({
             where: {
@@ -25,12 +26,15 @@ class CreateUserRepository implements ICreateUserRepository {
             throw new Error('Roles não foram encontradas')
         }
 
+        const bcryptHash = new bcrypt(params.password)
+        const hashedPassword = await bcryptHash.encode()
+
         const user = await prisma.user.create({
             data: {
                 email: params.email,
                 firstName: params.firstName,
                 lastName: params.lastName,
-                password: params.password,
+                password: hashedPassword,
                 roles: {
                     create: [
                         {

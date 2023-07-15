@@ -27,6 +27,7 @@ class Server {
         const userRoutes = new UserRoutes()
 
         this.app.use("/api/register", userRoutes.createUser)
+        this.app.use("/api/login", userRoutes.signIn)
     }
 
     private initializePopulate() {

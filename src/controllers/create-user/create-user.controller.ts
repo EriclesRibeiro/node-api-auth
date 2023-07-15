@@ -2,11 +2,11 @@ import Controller from "../../interfaces/controller";
 import HttpRequest from "../../interfaces/httpRequest";
 import HttpResponse from "../../interfaces/httpResponse";
 import User from "../../models/user.model";
-import { ICreateUserRepository } from "../../repositories/create-user/create-user.interface";
+import { ICreateUserRepositorie } from "../../repositories/create-user/create-user.interface";
 import { ICreateUserParams } from "./create-user.interfaces";
 
 class CreateUserController implements Controller {
-    constructor(private readonly createUserRepositorie: ICreateUserRepository) { }
+    constructor(private readonly createUserRepositorie: ICreateUserRepositorie) { }
     async handle(request: HttpRequest<ICreateUserParams>): Promise<HttpResponse<User | string>> {
         try {
 
@@ -38,7 +38,7 @@ class CreateUserController implements Controller {
         } catch (error) {
             return {
                 status: 500,
-                body: 'Ocorreu um erro inesperado'
+                error: 'Ocorreu um erro inesperado'
             }
         }
     }
