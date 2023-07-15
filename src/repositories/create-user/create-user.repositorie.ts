@@ -15,9 +15,13 @@ class CreateUserRepository implements ICreateUserRepository {
             throw new Error('E-mail já está sendo utilizado')
         }
 
-        const roles = await prisma.role.findMany({})
+        const role = await prisma.role.findFirst({
+            where: {
+                name: 'member'
+            }
+        })
 
-        if (!roles) {
+        if (!role) {
             throw new Error('Roles não foram encontradas')
         }
 
@@ -30,11 +34,7 @@ class CreateUserRepository implements ICreateUserRepository {
                 roles: {
                     create: [
                         {
-                            role: {
-                                create: {
-                                    name: 'member'
-                                }
-                            }
+                            roleId: role.id
                         }
                     ]
                 }

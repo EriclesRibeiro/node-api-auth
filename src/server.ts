@@ -2,6 +2,7 @@ import { log } from "console"
 import express, { Application, Request, Response, Router } from "express"
 import CreateUserController from "./controllers/create-user/create-user.controller"
 import UserRoutes from "./routes/user-routes"
+import Populate from "./database/populate"
 
 class Server {
     private app: Application
@@ -12,8 +13,9 @@ class Server {
         this.port = port
 
         this.initializeMiddleware()
-        this.initializeServer()
         this.initializeRouters()
+        this.initializePopulate()
+        this.initializeServer()
     }
 
     private initializeMiddleware() {
@@ -27,10 +29,19 @@ class Server {
         this.app.use("/api/register", userRoutes.createUser)
     }
 
+    private initializePopulate() {
+        const populate = new Populate()
+        populate.execute()
+    }
+
     private initializeServer() {
         this.app.listen(this.port, () => {
             log(`Server is running on port ${this.port}!`)
         })
+    }
+
+    private populateDatabase() {
+
     }
 }
 
